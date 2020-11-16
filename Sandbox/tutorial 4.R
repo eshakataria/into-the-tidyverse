@@ -311,3 +311,7 @@ new_data<-ca_jail%>%
 #idk how to summarise mean/sd for prop_jail based off trump/hillary counties 
 #ask 
 
+
+
+
+
