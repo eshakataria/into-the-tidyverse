@@ -317,9 +317,9 @@ new_data%>%
 ?sd
 
 new_data%>%
-  group_by(more_trump)%>%
-  summarise(prop_jail= mean(prop_jail, na.rm=TRUE))%>%
   mutate(sd= sd(prop_jail, na.rm=TRUE))%>%
+  group_by(more_trump)%>%
+  summarise(prop_jail= mean(prop_jail, na.rm=TRUE), sd)%>%
   ungroup()
 
 #diff values? 
