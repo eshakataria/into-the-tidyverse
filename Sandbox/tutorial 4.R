@@ -311,7 +311,16 @@ new_data<-ca_jail%>%
 #idk how to summarise mean/sd for prop_jail based off trump/hillary counties 
 #ask 
 
+new_data%>%
+  mutate(sd= sd(prop_jail, na.rm=FALSE))
 
+?sd
 
+new_data%>%
+  group_by(more_trump)%>%
+  summarise(prop_jail= mean(prop_jail, na.rm=TRUE))%>%
+  mutate(sd= sd(prop_jail, na.rm=TRUE))%>%
+  ungroup()
 
+#diff values? 
 
