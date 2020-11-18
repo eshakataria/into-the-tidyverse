@@ -69,8 +69,92 @@ conformity <- here("Data", "JustCon5_TPP_Order1.csv")%>%
   slice(-1) %>%
   type_convert()
 
+conformity #very wide
+
 conformity%>%
+  pivot_longer(cols= -sub_id, #pivot everything except for sub_id
+               names_to= "condition", 
+               values_to= "rating")
   
-us_rent_income
+#but each cell of condition does not contain a single value, but contains multiple pieces of info together, use tidy separate
+#separate look sofr common characters that are used to separate multiples pieces of info like _ - . then separates each piece of info to its own colum
+
+conformity%>%
+  pivot_longer(cols= -sub_id, #pivot everything except for sub_id
+               names_to= "condition", 
+               values_to= "rating")%>%
+  separate(col="condition",
+           into= c("crime_type", "crime_severity", "n_endorsing_punishment","repitition_number", "qualtrics_junk" ))%>%
+  select(-qualtrics_junk)
+
+#now every column is a variable, every row is an observation, and every cell contains only one value
+
+
+#unite to smoosh columns together 
+
+elections<- here("Data", "countypres_2000-2016.csv")%>%
+  read_csv()%>%
+  select(year, county, state, candidate, party, candidatevotes, totalvotes)
+
+elections
+#we want to combine columns containing info about county and state
+
+elections%>%
+  unite(col= "location",
+        county, state)
+
+#if we want to separate with a comma
+elections%>%
+  unite(col= "location",
+        county, state, 
+        sep= ",")
+
+#janitor
+banks <- here("Data", "BankBranchesData.txt") %>%
+  read_tsv()
+
+#tidyverse-preferred way of formatting variable names is to use all_lowercase_with_underscores
+#this one uses camelCaseFormat
+#want to convert to tidyvers compliant formate
+
+library(janitor)
+
+banks%>%
+  clean_names()
+
+candy<- here("Data", "candyhierarchy2017.csv")%>%
+  read_csv()%>%
+  clean_names()
+#variable names are awful
+
+candy%>%
+  clean_names()
+
+#excercises 
+
+#1
+candy2<-candy%>%
+  pivot_longer(cols= 'q6_100_grand_bar': 'q6_york_peppermint_patties', 
+               names_to= "candy", 
+               values_to= "rating")%>%
+
+
+  
+
+
+#2
+covid<- here("Data", "time_series_covid19_confirmed_US.csv")%>%
+  read_csv()
+
+covid2<- covid%>%
+  pivot_longer(cols= '1/22/20' : '9/24/20', 
+               names_to= "date", 
+               values_to= "cases")%>%
+  clean_names()
+
+
+
+
+?cols
 
 
