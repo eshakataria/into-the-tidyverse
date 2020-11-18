@@ -11,7 +11,7 @@
 #pivot_longer
 
 library(tidyr)
-library(readr)
+library(dplyr)
 
 billboard%>%
   slice(1:10)
@@ -71,6 +71,6 @@ conformity <- here("Data", "JustCon5_TPP_Order1.csv")%>%
 
 conformity%>%
   
-
+us_rent_income
 
 
