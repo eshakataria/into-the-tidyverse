@@ -324,3 +324,9 @@ new_data%>%
 
 #diff values? 
 
+new_data%>%
+  mutate(sd= sd(prop_jail, na.rm= TRUE))%>%
+  slice(1:10)
+
+
+
