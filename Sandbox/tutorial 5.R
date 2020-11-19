@@ -133,13 +133,20 @@ candy%>%
 #excercises 
 
 #1
-candy2<-candy%>%
+candy
+
+
+candy%>%
   pivot_longer(cols= 'q6_100_grand_bar': 'q6_york_peppermint_patties', 
                names_to= "candy", 
+               values_to= "rating")
+
+
+candy%>%
+  pivot_longer(cols= starts_with("q6"), 
+               names_to= "candy",
                values_to= "rating")%>%
-
-
-  
+  group_by()
 
 
 #2
