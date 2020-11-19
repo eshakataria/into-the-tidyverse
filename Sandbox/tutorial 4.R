@@ -296,7 +296,6 @@ mean(new_data$prop_jail[new_data$more_trump==FALSE], na.rm=TRUE) #.002124033
 sd(new_data$prop_jail[new_data$more_trump==FALSE], na.rm=TRUE) #.0007442979
 #na.rm = TRUE to remove missing values
 
-?sd
 
 new_data<-ca_jail%>%
   select(fips,total_pop, total_jail_pop)%>%
@@ -305,28 +304,17 @@ new_data<-ca_jail%>%
   left_join(elections, by=c("fips"="FIPS"))%>%
   mutate(more_trump= lean_republican>1)%>%
   group_by(prop_jail, more_trump)%>%
-  summarise(prop_jail= mean(prop_jail,na.rm=TRUE, sd(prop_jail, na.rm= TRUE)))%>%
+  summarise(mean= mean(prop_jail,na.rm=TRUE, sd= sd(prop_jail, na.rm= TRUE)))%>%
   ungroup()
 
-#idk how to summarise mean/sd for prop_jail based off trump/hillary counties 
-#ask 
+
 
 new_data%>%
-  mutate(sd= sd(prop_jail, na.rm=FALSE))
-
-?sd
-
-new_data%>%
-  mutate(sd= sd(prop_jail, na.rm=TRUE))%>%
   group_by(more_trump)%>%
-  summarise(prop_jail= mean(prop_jail, na.rm=TRUE), sd)%>%
+  summarise(mean= mean(prop_jail, na.rm=TRUE), sd= sd(prop_jail, na.rm=TRUE))%>%
   ungroup()
 
-#diff values? 
 
-new_data%>%
-  mutate(sd= sd(prop_jail, na.rm= TRUE))%>%
-  slice(1:10)
 
 
 
