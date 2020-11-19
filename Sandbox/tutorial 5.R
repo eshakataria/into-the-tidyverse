@@ -136,17 +136,19 @@ candy%>%
 candy
 
 
-candy%>%
+test<- candy%>%
   pivot_longer(cols= 'q6_100_grand_bar': 'q6_york_peppermint_patties', 
                names_to= "candy", 
-               values_to= "rating")
+               values_to= "rating")%>%
+  select(internal_id, candy, rating)%>%
+  drop_na()
 
 
 candy%>%
   pivot_longer(cols= starts_with("q6"), 
                names_to= "candy",
-               values_to= "rating")%>%
-  group_by()
+               values_to= "rating")
+
 
 
 #2
@@ -162,6 +164,5 @@ covid2<- covid%>%
 
 
 
-?cols
 
 
