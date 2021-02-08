@@ -172,3 +172,18 @@ covid %>%
   ggplot(mapping = aes(x=date, y=cases, color=state)) +
   geom_bar(stat = "summary", fun = "mean") +
   theme(legend.position = "bottom")
+
+
+regions <- here("Data", "state_region_division.csv") %>%
+  read_csv()
+
+covid %>%
+  inner_join(regions) %>%
+  group_by(region, date) %>%
+  summarise(cases_mean = mean(cases, na.rm = TRUE),
+            cases_sd = sd(cases, na.rm = TRUE),
+            cases_n = n(),
+            cases_se = cases_sd / cases_n) %>%
+  ungroup() %>%
+  ggplot(mapping = aes(x=date, y=cases_mean, color=region)) +
+  geom_line()
